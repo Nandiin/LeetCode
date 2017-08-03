@@ -59,6 +59,29 @@ inline void buildVector(ListNode* head, vector<int>& vec) {
     }
 }
 
+inline void buildBST(const vector<string>& vec, TreeNode*& root) {
+    if (vec.empty()) return;
+    queue<TreeNode*> q;
+    root = new TreeNode(std::stoi(vec[0]));
+    q.push(root);
+    auto i = 1;
+    while (!q.empty()) {
+        if (i >= vec.size()) break;
+        auto p = q.front();
+        q.pop();
+        if (vec[i] != "#") {
+            p->left = new TreeNode(std::stoi(vec[i]));
+            q.push(p->left);
+        }
+        if (i + 1 >= vec.size()) break;
+        if (vec[i + 1] != "#") {
+            p->right = new TreeNode(std::stoi(vec[i + 1]));
+            q.push(p->right);
+        }
+        i += 2;
+    }
+}
+
 #define SOLUTION_BEGIN(no) namespace _##no { class Solution { public:
 #define SOLUTION_END };}
 #define TEST_BEGIN(num) class Test##num : public ::testing::Test { public: typedef _##num::Solution Solution;
